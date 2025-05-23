@@ -62,5 +62,5 @@ jobs:
           Remove-Item -Recurse -Force build-msvc -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Path build-msvc | Out-Null
           cd build-msvc
-          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl
+          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER="cl.exe"
           ninja
