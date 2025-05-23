@@ -66,3 +66,44 @@ jobs:
           cd build-msvc
           cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl.exe
           ninja
+
+  test-gcc:
+    name: Test with GCC
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential ninja-build g++-14 gcc-14
+
+      - name: Configure and build with GCC
+        run: |
+          rm -rf build-gcc
+          mkdir build-gcc
+          cd build-gcc
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=g++-14 -DTESTING=on
+          ninja
+          ./src/tests
+
+  test-windows:
+    name: Test with MSVC on Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure, build, and run tests with MSVC
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          rmdir /s /q build-msvc-test 2>nul
+          mkdir build-msvc-test
+          cd build-msvc-test
+          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl.exe -DTESTING=on
+          ninja
+          .\src\tests.exe          
