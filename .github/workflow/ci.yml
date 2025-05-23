@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-gcc:
+    name: Build with GCC
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential ninja-build g++-14 gcc-14
+
+      - name: Configure and build with GCC
+        run: |
+          rm -rf build-gcc
+          mkdir build-gcc
+          cd build-gcc
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=g++-14
+          ninja
+          
+  build-clang:
+    name: Build with Clang
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build clang++-19 clang-tools-19
+
+      - name: Configure and build with Clang
+        run: |
+          rm -rf build-clang
+          mkdir build-clang
+          cd build-clang
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=clang++-19
+          ninja
+
+  build-windows:
+    name: Build with MSVC on Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure and build with MSVC
+        run: |
+          Remove-Item -Recurse -Force build-msvc -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Path build-msvc | Out-Null
+          cd build-msvc
+          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl
+          ninja
