@@ -57,10 +57,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure and build with MSVC
+        - name: Configure and build with MSVC
+        shell: cmd
         run: |
-          Remove-Item -Recurse -Force build-msvc -ErrorAction SilentlyContinue
-          New-Item -ItemType Directory -Path build-msvc | Out-Null
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          rmdir /s /q build-msvc 2>nul
+          mkdir build-msvc
           cd build-msvc
-          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER="cl.exe"
+          cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl.exe
           ninja
