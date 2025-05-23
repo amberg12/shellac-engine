@@ -80,7 +80,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake build-essential ninja-build g++-14 gcc-14
 
-      - name: Configure and build with GCC
+      - name: Configure, build and run tests with GCC
         run: |
           rm -rf build-gcc
           mkdir build-gcc
