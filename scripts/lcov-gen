@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# When running this through github actions, there seems to be large versioning
+# issues - the default `gcc` executable on ubuntu is too old to execute the
+# program, while the `lcov` version is unable to deal with the `gcc-14`
+# executable present.  We must be proactive with making sure the coverage is
+# 100%, unfortunately.
+#
+# A silver lining is that at least it doesn't fail anything on github!
+
 report_error() {
     local SCRIPT_NAME=$(basename "$0")
     local ERROR_MSG="$1"
