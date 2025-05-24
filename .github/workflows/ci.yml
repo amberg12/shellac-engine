@@ -106,4 +106,27 @@ jobs:
           cd build-msvc-test
           cmake .. -G "Ninja" -DCMAKE_CXX_COMPILER=cl.exe -DTESTING=on
           ninja
-          .\src\tests.exe          
+          .\src\tests.exe
+
+  coverage-gcc:
+    name: Test coverage with GCC
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential ninja-build g++-14 gcc-14 lcov
+
+      - name: Configure, build and run tests with GCC
+        run: |
+          rm -rf build-gcc
+          mkdir build-gcc
+          cd build-gcc
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=g++-14 -DTESTING=on -DCMAKE_BUILD_TYPE=Debug
+          ninja
+          ./src/tests
+          ../scripts/lcov-gen

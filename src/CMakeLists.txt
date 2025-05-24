@@ -34,6 +34,8 @@ else()
 endif()
 
 if(TESTING)
+  enable_testing()
+  
   Include(FetchContent)
 
   FetchContent_Declare(
@@ -61,5 +63,13 @@ if(TESTING)
   )
 
   target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+  # use gcov for non msvc builds 
+  if(NOT MSVC)
+    target_compile_options(${TEST_NAME} PRIVATE --coverage)
+    target_link_options(${TEST_NAME} PRIVATE --coverage)
+  endif()
+
+  add_test(NAME unit_tests COMMAND ${TEST_NAME})
 endif()
 
