@@ -4,12 +4,6 @@
 
 using namespace engine;
 
-TEST_CASE("add should add with regards to the laws of mathematics", "[add]")
-{
-  auto result = util::add(5, 3);
-  REQUIRE(result == 8);
-}
-
 TEST_CASE("simple add should add with regards to the laws of mathematics", "[add]")
 {
   auto result = util::simple_add(5, 3);

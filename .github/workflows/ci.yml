@@ -119,14 +119,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake build-essential ninja-build g++-14 gcc-14 lcov
+          sudo apt-get install -y cmake build-essential ninja-build g++ gcc lcov
 
       - name: Configure, build and run tests with GCC
         run: |
           rm -rf build-gcc
           mkdir build-gcc
           cd build-gcc
-          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=g++-14 -DTESTING=on -DCMAKE_BUILD_TYPE=Debug
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=g++ -DTESTING=on -DCMAKE_BUILD_TYPE=Debug
           ninja
           ./src/tests
           ../scripts/lcov-gen
