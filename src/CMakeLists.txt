@@ -10,6 +10,7 @@ set(
   board/test_color.cpp
   board/test_piece.cpp
   board/test_square.cpp
+  util/test_matrix.cpp
 )
 
 set(BIN_NAME shellac-engine)
