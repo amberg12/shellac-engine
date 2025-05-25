@@ -2,7 +2,9 @@
 
 #include "util/to_safe_larger_integral.hpp"
 
+#include <iostream>
 #include <sstream>
+#include <string>
 
 auto chess::to_string(const chess::square& sq) -> std::string
 {

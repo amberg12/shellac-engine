@@ -3,6 +3,8 @@
 #include <array>
 #include <cstdint>
 #include <iostream>
+#include <string>
+#include <type_traits>
 
 namespace chess {
 
@@ -74,7 +76,7 @@ enum class square : std::uint8_t
   H8,
 };
 
-template <typename T, typename = std::enable_if<std::is_integral_v<T>>>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 struct square_unpack
 {
   T rank;
@@ -95,25 +97,25 @@ static constexpr std::array<square, 64> SQUARES = {
   square::E8, square::F8, square::G8, square::H8,
 };
 
-template <typename T, typename = std::enable_if<std::is_integral_v<T>>>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 constexpr auto from_rank_file(T rank, T file) -> square
 {
-  return static_cast<square>(rank * 8 + file);
+  return static_cast<square>((rank * 8) + file);
 }
 
-template <typename T, typename = std::enable_if<std::is_integral_v<T>>>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 constexpr auto to_file(square sq) -> T
 {
   return static_cast<T>(sq) % 8;
 }
 
-template <typename T, typename = std::enable_if<std::is_integral_v<T>>>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 constexpr auto to_rank(square sq) -> T
 {
   return static_cast<T>(sq) / 8;
 }
 
-template <typename T, typename = std::enable_if<std::is_integral_v<T>>>
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 constexpr auto to_rank_file(square sq) -> square_unpack<T>
 {
   return {to_rank<T>(sq), to_file<T>(sq)};
