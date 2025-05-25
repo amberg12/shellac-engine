@@ -2,12 +2,14 @@ set(
   SRCS
   board/color.cpp
   board/piece.cpp
+  board/square.cpp
 )
 
 set(
   TEST_SRCS
   board/test_color.cpp
   board/test_piece.cpp
+  board/test_square.cpp
 )
 
 set(BIN_NAME shellac-engine)
