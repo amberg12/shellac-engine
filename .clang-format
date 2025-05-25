@@ -4,8 +4,8 @@ BasedOnStyle: LLVM
 # Alignment.
 AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveMacros: true
-AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
 AlignEscapedNewlines: Right
 AlignOperands: true
 AlignTrailingComments: true
