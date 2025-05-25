@@ -1,5 +1,6 @@
 #include "board/color.hpp"
 
+#include "util/to_safe_larger_integral.hpp"
 #include "util/to_underlying.hpp"
 
 #include <iostream>
@@ -22,11 +23,13 @@
     case color::BLACK: {
       return "color::BLACK";
     }
+    default: {
+      std::ostringstream oss;
+      oss << "color::"
+          << chess::to_safe_larger_integral(chess::to_underlying(c));
+      return oss.str();
+    }
   }
-
-  std::ostringstream oss;
-  oss << "color::" << chess::to_underlying(c);
-  return oss.str();
 }
 
 auto chess::operator<<(std::ostream& os, chess::color c) -> std::ostream&
