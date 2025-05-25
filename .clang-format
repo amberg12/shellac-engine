@@ -10,6 +10,11 @@ AlignEscapedNewlines: Right
 AlignOperands: true
 AlignTrailingComments: true
 
+# Align pointer and reference operators to the type (left) rather than the variable (right)
+DerivePointerAlignment: false
+PointerAlignment: Right
+ReferenceAlignment: Left
+
 # Allow one-liners for case labels.
 AllowShortCaseLabelsOnASingleLine: true
 

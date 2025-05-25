@@ -1,6 +1,11 @@
 set(
   SRCS
-  util/add.cpp
+  board/color.cpp
+)
+
+set(
+  TEST_SRCS
+  board/test_color.cpp
 )
 
 set(BIN_NAME shellac-engine)
@@ -53,8 +58,8 @@ if(TESTING)
     ${TEST_NAME}
     PRIVATE
     test_main.cpp
-    util/test_add.cpp
     ${SRCS}
+    ${TEST_SRCS}
   )
 
   target_include_directories(

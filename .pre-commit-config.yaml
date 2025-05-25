@@ -5,4 +5,10 @@ repos:
       - id: clang-format
         args: [--style=file]
       - id: clang-tidy
-        args: [-p ./build ]
+        args: [--export-fixes=-]
+        additional_dependencies: [clang-tidy]
+        exclude: test_.*
+        files: \.(cpp|cxx|cc|c|hpp|hxx|hh|h)$
+        args: [
+          -p=build,
+        ]
