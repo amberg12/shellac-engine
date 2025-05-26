@@ -84,3 +84,80 @@ TEST_CASE("Zero-sized matrix specialization", "[matrix][zero]")
 {
   STATIC_REQUIRE(matrix<int, 0, 0>::SIZE == 0);
 }
+
+namespace {
+// Helper function to extract content after ">::"
+std::string extract_matrix_content(const std::string& str)
+{
+  auto pos = str.find(">::");
+  if (pos == std::string::npos)
+    return str;
+  return str.substr(pos + 3);
+}
+}  // namespace
+
+TEST_CASE("matrix to_string function", "[matrix][to_string]")
+{
+  SECTION("empty matrix")
+  {
+    chess::matrix<int, 0, 0> m;
+    REQUIRE(extract_matrix_content(chess::to_string(m)) == "{}");
+  }
+
+  SECTION("1x1 matrix")
+  {
+    chess::matrix<int, 1, 1> m(42);
+    REQUIRE(extract_matrix_content(chess::to_string(m)) == "{{42}}");
+  }
+
+  SECTION("2x2 matrix")
+  {
+    chess::matrix<int, 2, 2> m(0);
+    m.at(0, 0) = 1;
+    m.at(1, 0) = 2;
+    m.at(0, 1) = 3;
+    m.at(1, 1) = 4;
+    REQUIRE(extract_matrix_content(chess::to_string(m)) == "{{1, 2}, {3, 4}}");
+  }
+
+  SECTION("3x2 matrix")
+  {
+    chess::matrix<int, 3, 2> m(0);
+    m.at(0, 0) = 1;
+    m.at(1, 0) = 2;
+    m.at(2, 0) = 3;
+    m.at(0, 1) = 4;
+    m.at(1, 1) = 5;
+    m.at(2, 1) = 6;
+    REQUIRE(
+      extract_matrix_content(chess::to_string(m)) == "{{1, 2, 3}, {4, 5, 6}}"
+    );
+  }
+}
+
+TEST_CASE("matrix operator<<", "[matrix][stream]")
+{
+  SECTION("stream output for 2x2 matrix")
+  {
+    chess::matrix<int, 2, 2> m(0);
+    m.at(0, 0) = 1;
+    m.at(1, 0) = 2;
+    m.at(0, 1) = 3;
+    m.at(1, 1) = 4;
+
+    std::ostringstream oss;
+    oss << m;
+    REQUIRE(extract_matrix_content(oss.str()) == "{{1, 2}, {3, 4}}");
+  }
+
+  SECTION("stream output for 1x3 matrix")
+  {
+    chess::matrix<std::string, 1, 3> m("a");
+    m.at(0, 1) = "b";
+    m.at(0, 2) = "c";
+
+    std::ostringstream oss;
+    oss << m;
+    REQUIRE(extract_matrix_content(oss.str()) == "{{a}, {b}, {c}}");
+  }
+}

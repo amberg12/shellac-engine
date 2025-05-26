@@ -1,10 +1,14 @@
 #pragma once
 
+#include "util/type_string.hpp"
+
 #include <algorithm>
 #include <array>
 #include <cstddef>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 
 namespace chess {
 
@@ -54,6 +58,51 @@ public:
   using container_type = void;
   static constexpr std::size_t SIZE = 0;
 };
+
+template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
+[[nodiscard]] auto to_string(const chess::matrix<T, X_SIZE, Y_SIZE>& m)
+  -> std::string
+{
+  std::ostringstream oss;
+  oss << "matrix<" << chess::type_string_v<T> << ", " << X_SIZE << ", "
+      << Y_SIZE << ">::{";
+
+  const auto add_to_oss = [&](const T& e) { oss << e << ", "; };
+
+  for (auto y = std::size_t(0); y < Y_SIZE - 1; ++y) {
+    oss << "{";
+    std::for_each(m.crow_begin(y), std::prev(m.crow_end(y)), add_to_oss);
+    oss << *std::prev(m.crow_end(y)) << "}, ";
+  }
+
+  constexpr auto final_row = Y_SIZE - 1;
+
+  oss << "{";
+  std::for_each(
+    m.crow_begin(final_row), std::prev(m.crow_end(final_row)), add_to_oss
+  );
+  oss << *std::prev(m.crow_end(final_row)) << "}";
+  oss << "}";
+
+  return oss.str();
+}
+
+template <typename T>
+[[nodiscard]] auto to_string(const chess::matrix<T, 0, 0>& m) -> std::string
+{
+  (void)m;
+  std::ostringstream oss;
+  oss << "matrix<" << chess::type_string_v<T> << ", 0, 0>::{}";
+  return oss.str();
+}
+
+template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
+auto operator<<(std::ostream& os, chess::matrix<T, X_SIZE, Y_SIZE>& m)
+  -> std::ostream&
+{
+  os << chess::to_string(m);
+  return os;
+}
 
 }  // namespace chess
 
