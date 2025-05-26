@@ -24,32 +24,24 @@ public:
     -> const value_type&;
   [[nodiscard]] auto at(std::size_t x, std::size_t y) -> value_type&;
 
-  [[nodiscard]] auto container() const -> const
-    typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type&;
-  [[nodiscard]] auto container() ->
-    typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type&;
+  [[nodiscard]] auto container() const -> const container_type&;
+  [[nodiscard]] auto container() -> container_type&;
 
-  [[nodiscard]] auto begin() -> typename container_type::iterator;
-  [[nodiscard]] auto begin() const -> typename container_type::iterator;
-  [[nodiscard]] auto cbegin() const -> typename container_type::iterator;
+  [[nodiscard]] auto begin() -> iterator;
+  [[nodiscard]] auto begin() const -> iterator;
+  [[nodiscard]] auto cbegin() const -> iterator;
 
-  [[nodiscard]] auto end() -> typename container_type::iterator;
-  [[nodiscard]] auto end() const -> typename container_type::iterator;
-  [[nodiscard]] auto cend() const -> typename container_type::iterator;
+  [[nodiscard]] auto end() -> iterator;
+  [[nodiscard]] auto end() const -> iterator;
+  [[nodiscard]] auto cend() const -> iterator;
 
-  [[nodiscard]] auto row_begin(std::size_t y) ->
-    typename container_type::iterator;
-  [[nodiscard]] auto row_begin(std::size_t y) const ->
-    typename container_type::const_iterator;
-  [[nodiscard]] auto crow_begin(std::size_t y) const ->
-    typename container_type::const_iterator;
+  [[nodiscard]] auto row_begin(std::size_t y) -> iterator;
+  [[nodiscard]] auto row_begin(std::size_t y) const -> const_iterator;
+  [[nodiscard]] auto crow_begin(std::size_t y) const -> const_iterator;
 
-  [[nodiscard]] auto row_end(std::size_t y) ->
-    typename container_type::iterator;
-  [[nodiscard]] auto row_end(std::size_t y) const ->
-    typename container_type::const_iterator;
-  [[nodiscard]] auto crow_end(std::size_t y) const ->
-    typename container_type::const_iterator;
+  [[nodiscard]] auto row_end(std::size_t y) -> iterator;
+  [[nodiscard]] auto row_end(std::size_t y) const -> const_iterator;
+  [[nodiscard]] auto crow_end(std::size_t y) const -> const_iterator;
 
 private:
   std::array<T, SIZE> m_container{};
@@ -102,103 +94,93 @@ chess::matrix<T, X_SIZE, Y_SIZE>::at(std::size_t x, std::size_t y) -> T&
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::container() const -> const
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type&
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::container() const
+  -> const container_type&
 {
   return m_container;
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::container() ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type&
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::container()
+  -> container_type&
 {
   return m_container;
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::begin() ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::begin() -> iterator
 {
   return std::begin(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::begin() const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::begin() const -> iterator
 {
   return std::begin(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::cbegin() const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::cbegin() const -> iterator
 {
   return std::cbegin(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::end() ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::end() -> iterator
 {
   return std::end(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::end() const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::end() const -> iterator
 {
   return std::end(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::cend() const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::cend() const -> iterator
 {
   return std::cend(m_container);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_begin(std::size_t y) ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_begin(std::size_t y)
+  -> iterator
 {
   return m_container.begin() + (y * X_SIZE);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
 [[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_begin(std::size_t y
-) const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::const_iterator
+) const -> const_iterator
 {
   return m_container.begin() + (y * X_SIZE);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
 [[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::crow_begin(std::size_t y
-) const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::const_iterator
+) const -> const_iterator
 {
   return m_container.begin() + (y * X_SIZE);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
-[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_end(std::size_t y) ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::iterator
+[[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_end(std::size_t y)
+  -> iterator
 {
   return m_container.begin() + ((y + 1) * X_SIZE);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
 [[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::row_end(std::size_t y
-) const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::const_iterator
+) const -> const_iterator
 {
   return m_container.begin() + ((y + 1) * X_SIZE);
 }
 
 template <typename T, std::size_t X_SIZE, std::size_t Y_SIZE>
 [[nodiscard]] auto chess::matrix<T, X_SIZE, Y_SIZE>::crow_end(std::size_t y
-) const ->
-  typename chess::matrix<T, X_SIZE, Y_SIZE>::container_type::const_iterator
+) const -> const_iterator
 {
   return m_container.begin() + ((y + 1) * X_SIZE);
 }
